@@ -59,7 +59,6 @@ void process_lis_data(const json& data) {
 
 void process_market_data(const json& data) {
     if (data.is_array()) {
-        // Обработка формата массива
         size_t count = 0;
         for (auto& item : data) {
             try {
@@ -80,7 +79,6 @@ void process_market_data(const json& data) {
         spdlog::info("обработано market-csgo предметов (массив): {}", count);
     }
     else if (data.is_object() && data.contains("items")) {
-        // Обработка формата объекта с items
         size_t count = 0;
         for (auto& [key, item] : data["items"].items()) {
             try {
@@ -89,7 +87,6 @@ void process_market_data(const json& data) {
                 std::string name;
                 double price = 0;
 
-                // Разные варианты названий
                 if (item.contains("market_hash_name")) {
                     name = item["market_hash_name"].get<std::string>();
                 }
@@ -97,13 +94,12 @@ void process_market_data(const json& data) {
                     name = item["name"].get<std::string>();
                 }
 
-                // Разные варианты цен
                 if (item.contains("price")) {
                     if (item["price"].is_string()) {
                         price = std::stod(item["price"].get<std::string>());
                     }
                     else if (item["price"].is_number()) {
-                        price = item["price"].get<double>() / 100.0; // Конвертация из копеек
+                        price = item["price"].get<double>() / 100.0; 
                     }
                 }
 
@@ -164,7 +160,6 @@ void print_profitable_skins(double min_profit_percent = 20.0) {
 }
 
 int main() {
-    // 1. Загрузка LIS данных
     std::string lis_data = fetch_data("https://lis-skins.com/market_export_json/api_csgo_full.json");
     save_raw_data(lis_data, "lis_raw.json");
     
@@ -177,7 +172,6 @@ int main() {
         }
     }
     
-    // 2. Загрузка Market данных
     std::string market_data = fetch_data("https://market.csgo.com/api/v2/prices/USD.json");
     save_raw_data(market_data, "market_raw.json");
     
@@ -190,10 +184,8 @@ int main() {
         }
     }
     
-    // 3. Вывод результатов
     print_profitable_skins();
     
-    // 4. Диагностика совпадений
     spdlog::info("диагностика совпадений названий:");
     int examples = 0;
     for (const auto& [name, skin] : skins_data) {
