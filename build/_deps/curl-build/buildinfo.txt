@@ -1,0 +1,15 @@
+# This is a generated file.  Do not edit.
+buildinfo.configure.tool: cmake
+buildinfo.configure.command: /opt/homebrew/bin/cmake
+buildinfo.configure.version: 4.0.2
+buildinfo.configure.args:
+buildinfo.configure.generator: Unix Makefiles
+buildinfo.configure.make: /usr/bin/make
+buildinfo.host.cpu: arm64
+buildinfo.host.os: Darwin
+buildinfo.target.cpu: arm64
+buildinfo.target.os: Darwin
+buildinfo.target.flags: APPLE UNIX
+buildinfo.compiler: AppleClang
+buildinfo.compiler.version: 17.0.0.17000013
+buildinfo.sysroot: 
